@@ -1,0 +1,85 @@
+AGER_TYP,Elderly Type
+ALTERSKATEGORIE_GROB,Age Bin
+ANREDE_KZ,Gender
+CJT_GESAMTTYP,Consumption Channel Type
+FINANZ_MINIMALIST,MoneyType__Minimalist
+FINANZ_SPARER,MoneyType__Saver
+FINANZ_VORSORGER,MoneyType__Preparer
+FINANZ_ANLEGER,MoneyType__Investor
+FINANZ_UNAUFFAELLIGER,MoneyType__Inconspicuous
+FINANZ_HAUSBAUER,MoneyType__Homeowner
+FINANZTYP,MoneyType__Primary
+GEBURTSJAHR,Birth Year
+GFK_URLAUBERTYP,Vacation Habits
+GREEN_AVANTGARDE,Young Environmentalist
+HEALTH_TYP,Health Type
+LP_LEBENSPHASE_FEIN,Life Stage - HighRes
+LP_LEBENSPHASE_GROB,Life Stage - LowRes
+LP_FAMILIE_FEIN,Family Type - HighRes
+LP_FAMILIE_GROB,Family Type - LowRes
+LP_STATUS_FEIN,Socioeconomic Status - HighRes
+LP_STATUS_GROB,Socioeconomic Status - LowRes
+NATIONALITAET_KZ,Nationality Based on Name
+PRAEGENDE_JUGENDJAHRE,Generation Designation
+RETOURTYP_BK_S,Customer Type
+SEMIO_SOZ,PersonalityType__Social
+SEMIO_FAM,PersonalityType__Family
+SEMIO_REL,PersonalityType__Religious
+SEMIO_MAT,PersonalityType__Materialist
+SEMIO_VERT,PersonalityType__Dreamer
+SEMIO_LUST,PersonalityType__Sensual
+SEMIO_ERL,PersonalityType__Event
+SEMIO_KULT,PersonalityType__Cultured
+SEMIO_RAT,PersonalityType__Rational
+SEMIO_KRIT,PersonalityType__Critical
+SEMIO_DOM,PersonalityType__Dominant
+SEMIO_KAEM,PersonalityType__Combative
+SEMIO_PFLICHT,PersonalityType__Dutiful
+SEMIO_TRADV,PersonalityType__Traditional
+SHOPPER_TYP,Shopper Type
+SOHO_KZ,Small or Home Office Owner
+TITEL_KZ,Academic Title
+VERS_TYP,Insurance Type
+ZABEOTYP,Energy Consumption Type
+ALTER_HH,HH: Head of HH Birthdate Bin (5-Year)
+ANZ_PERSONEN,HH: Number of Adults in HH
+ANZ_TITEL,HH: Number of Academic Title Holders in HH
+HH_EINKOMMEN_SCORE,HH: Net Income Bins
+KK_KUNDENTYP,HH: Customer Type
+W_KEIT_KIND_HH,HH: Probability of Children in Residence
+WOHNDAUER_2008,HH: Length of Residency (bins)
+ANZ_HAUSHALTE_AKTIV,Bldg: Number of HHs
+ANZ_HH_TITEL,Bldg: Number of Academic Title Holders
+GEBAEUDETYP,Bldg: Building Type
+KONSUMNAEHE,Bldg: Distance to Point of Sale Category
+MIN_GEBAEUDEJAHR,Bldg: Year of Building's Initial Database Entry
+OST_WEST_KZ,Bldg: Location Relative to E or W Germany
+WOHNLAGE,Bldg: Neighborhood Quality
+CAMEO_DEUG_2015,RR4: Life Stage Type - LowRes
+CAMEO_DEU_2015,RR4: Life Stage Type - HighRes
+CAMEO_INTL_2015,RR4: Life Stage Type - Int'l Code Mapping
+KBA05_ANTG1,RR3: Bins of 1-2 Family Homes
+KBA05_ANTG2,RR3: Bins of 3-5 Family Homes
+KBA05_ANTG3,RR3: Bins of 6-10 Family Homes
+KBA05_ANTG4,RR3: Bins of 10+ Family Homes
+KBA05_BAUMAX,RR3: Most Common Bldg Type
+KBA05_GBZ,RR3: Bin Counts of Bldgs
+BALLRAUM,PostCode: Distance to Nearest Urban Center (bins)
+EWDICHTE,PostCode: Density of HHs per km^2 (bins)
+INNENSTADT,PostCode: Distance to City Center (bins)
+GEBAEUDETYP_RASTER,RR1: Residential-Commercial Activity Ratio (categories)
+KKK,RR1: Purchasing Power (bins)
+MOBI_REGIO,RR1: Movement Patterns
+ONLINE_AFFINITAET,RR1: Online Affinity
+REGIOTYP,RR1: Neighborhood Type
+KBA13_ANZAHL_PKW,PLZ8: Number of Cars
+PLZ8_ANTG1,PLZ8: Bins of 1-2 Family Homes
+PLZ8_ANTG2,PLZ8: Bins of 3-5 Family Homes
+PLZ8_ANTG3,PLZ8: Bins of 6-10 Family Homes
+PLZ8_ANTG4,PLZ8: Bins of 10+ Family Homes
+PLZ8_BAUMAX,PLZ8: Most Common Bldg Type
+PLZ8_HHZ,PLZ8: Bin Counts of HHs
+PLZ8_GBZ,PLZ8: Bin Counts of Bldgs
+ARBEIT,Community: Share of Unemployment
+ORTSGR_KLS9,Community: Size (bins)
+RELAT_AB,Community: Share of Unemployment Relative to Parent County
