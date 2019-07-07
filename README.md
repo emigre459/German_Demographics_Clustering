@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This is my unsupervised learning project for the Udacity Data Scientist Nanodegree. This project focuses on taking general demographic data about the population of Germany (provided at an individual person level) and performing clustering on it to segment the population into similar groups. This will allow us to train a model that then can be applied to data about customers in a mail-order sales company to segment that customer base and see in what demographic clusters customers may be overrepresented. This knowledge can then be applied to business decisions such as determining what groups of non-customers in the German population would be most receptive to direct advertising campaigns, for example.
+This project focuses on taking general demographic data about the population of Germany (provided at an individual person level) and performing clustering on it to segment the population into similar groups. This will allow us to then train a model that can be applied to data about customers in a mail-order sales company and thus segment that customer base and see in what demographic clusters customers may be overrepresented. This knowledge can then be applied to business decisions such as determining what groups of non-customers in the German population would be most receptive to direct advertising campaigns, for example.
 
 ## The Data
 
