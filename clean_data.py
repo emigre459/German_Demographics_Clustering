@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
+from sklearn.impute import SimpleImputer
 
 
-def clean_data(df, feature_summary):
+def enhanced_clean(df, feature_summary, median_imputer, mode_imputer):
     """
     Perform feature trimming, re-encoding, and engineering for demographics
     data. This version is enhanced relative to the version in the Jupyter
@@ -12,8 +13,15 @@ def clean_data(df, feature_summary):
     ------
     df: Demographics DataFrame
     
-    feature_summary: DataFrame that includes listing of the various missing value codes
-        for each feature
+    feature_summary: DataFrame that includes listing of the various missing value codes for each feature
+
+    median_imputer: sklearn SimpleImputer object with strategy = 'median'.
+        This should be the imputer trained on the general population features
+        'Bldg: Number of HHs' and 'PLZ8: Number of Cars'
+
+    mode_imputer: sklearn SimpleImputer object with strategy = 'most frequent'.
+        This should be the imputer trained ont he general population feature
+        'Bldg: Distance to Point of Sale Category'
         
     OUTPUT: Trimmed and cleaned demographics DataFrame
     """
@@ -321,7 +329,49 @@ def clean_data(df, feature_summary):
     # -------------------------------------------------------------------
     # Impute remaining missing values
 
-    
+    # Use Age Bin to impute Birth Year values, using midpoint of associated 
+    # Age Bin to dictate year
+    age_bin_map = {
+        1: '< 30 years old',
+        2: '30 - 45 years old',
+        3: '46 - 60 years old',
+        4: '> 60 years old'
+    }
+
+    # Assume data are all relative to 2017, as this is the maximum Birth Year value
+    # Earliest Birth Year is 1900, making greatest age 117 
+        # Thus we'll assume 20 year midpoint for code 4 (assuming anyone 100+ is outlier)
+    age_bin_to_year = {
+        1: 2002,
+        2: 1979,
+        3: 1963,
+        4: 1937
+    }
+
+    # Make a series that is a mapping of Age Bin to birth years
+    mapped_series = df['Age Bin'].map(age_bin_to_year)
+
+    # Use this mapped series and fillna() on Birth Year 
+        # to take midpoint Age Bin year as Birth Year
+    df['Birth Year'].fillna(mapped_series, inplace=True)
+
+
+    # Drop null rows for HH: Probability of Children in Residence   
+    df.dropna(subset=['HH: Probability of Children in Residence'],
+                  inplace=True)
+
+    # Bldg: Number of HHs and PLZ8: Number of Cars - Impute using the median
+    # obtained from features in general population data
+    df[['Bldg: Number of HHs', 'PLZ8: Number of Cars']] = \
+    median_imputer.transform(df[['Bldg: Number of HHs', 
+        'PLZ8: Number of Cars']])
+
+    # Bldg: Distance to Point of Sale Category - Impute using mode
+    # obtained from features in general population data
+    df['Bldg: Distance to Point of Sale Category'] = \
+    mode_imputer.transform(df['Bldg: Distance to Point of Sale Category'].\
+        values.reshape(-1, 1))
+
 
     # -------------------------------------------------------------------
     # Return the cleaned dataframe.
