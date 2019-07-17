@@ -395,7 +395,8 @@ def enhanced_clean(df, feature_summary, missing_breakpoint,
     'RR1: Movement Patterns',
     'Generation Movement',
     'Generation Decade']
-    median_imputer.transform(df[cols])
+
+    df[cols] = median_imputer.transform(df[cols])
 
     # -------------------------------------------------------------------
     # Return the cleaned dataframe.
