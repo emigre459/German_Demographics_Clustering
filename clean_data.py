@@ -3,7 +3,8 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 
 
-def enhanced_clean(df, feature_summary, median_imputer, mode_imputer):
+def enhanced_clean(df, feature_summary, missing_breakpoint, 
+    median_imputer):
     """
     Perform feature trimming, re-encoding, and engineering for demographics
     data. This version is enhanced relative to the version in the Jupyter
@@ -15,13 +16,12 @@ def enhanced_clean(df, feature_summary, median_imputer, mode_imputer):
     
     feature_summary: DataFrame that includes listing of the various missing value codes for each feature
 
+    missing_breakpoint: int. Amount of missing values allowed in any given
+        row in order to retain it
+
     median_imputer: sklearn SimpleImputer object with strategy = 'median'.
         This should be the imputer trained on the general population features
-        'Bldg: Number of HHs' and 'PLZ8: Number of Cars'
-
-    mode_imputer: sklearn SimpleImputer object with strategy = 'most frequent'.
-        This should be the imputer trained ont he general population feature
-        'Bldg: Distance to Point of Sale Category'
+        that had more than 1% missing values
         
     OUTPUT: Trimmed and cleaned demographics DataFrame
     """
@@ -133,7 +133,7 @@ def enhanced_clean(df, feature_summary, median_imputer, mode_imputer):
     df.rename(columns=new_names, inplace=True)
 
     # Remove rows having more than one missing value
-    df = df.loc[df.isnull().sum(axis=1) < 2,:]
+    df = df.loc[df.isnull().sum(axis=1) < missing_breakpoint,:]
 
     
     # -------------------------------------------------------------------
@@ -241,6 +241,9 @@ def enhanced_clean(df, feature_summary, median_imputer, mode_imputer):
     # its information in the new features
     df.drop(columns='Generation Designation', inplace=True)
 
+    # Drop the rows with missing int'l codes
+    df.dropna(subset=["RR4: Life Stage Type - Int\'l Code Mapping"],
+        inplace=True)
 
     # Cast as int since it seems to keep coming up as object type
     df["RR4: Life Stage Type - Int'l Code Mapping"] =\
@@ -329,6 +332,29 @@ def enhanced_clean(df, feature_summary, median_imputer, mode_imputer):
     # -------------------------------------------------------------------
     # Impute remaining missing values
 
+    # Drop null rows features with 1% or less missing values
+    cols = ['Bldg: Number of HHs',
+    'PLZ8: Primarily Business Bldgs',
+    'PLZ8: Bins of 1-2 Family Homes',
+    'PLZ8: Bins of 6-10 Family Homes',
+    'PLZ8: Bins of 10+ Family Homes',
+    'PLZ8: Bin Counts of HHs',
+    'PLZ8: Bin Counts of Bldgs',
+    'PLZ8: Bins of 3-5 Family Homes',
+    'Community: Share of Unemployment',
+    'Community: Share of Unemployment Relative to Parent County',
+    'Community: Size (bins)',
+    'Bldg: Number of Academic Title Holders',
+    'PLZ8: Number of Cars',
+    'Age Bin',
+    'PostCode: Distance to City Center (bins)',
+    'PostCode: Density of HHs per km^2 (bins)',
+    'PostCode: Distance to Nearest Urban Center (bins)',
+    'Bldg: Distance to Point of Sale Category',
+    'RR1: Residential-Commercial Activity Ratio (categories)']
+
+    df.dropna(subset=cols, inplace=True)
+
     # Use Age Bin to impute Birth Year values, using midpoint of associated 
     # Age Bin to dictate year
     age_bin_map = {
@@ -354,24 +380,22 @@ def enhanced_clean(df, feature_summary, median_imputer, mode_imputer):
     # Use this mapped series and fillna() on Birth Year 
         # to take midpoint Age Bin year as Birth Year
     df['Birth Year'].fillna(mapped_series, inplace=True)
+    
 
-
-    # Drop null rows for HH: Probability of Children in Residence   
-    df.dropna(subset=['HH: Probability of Children in Residence'],
-                  inplace=True)
-
-    # Bldg: Number of HHs and PLZ8: Number of Cars - Impute using the median
-    # obtained from features in general population data
-    df[['Bldg: Number of HHs', 'PLZ8: Number of Cars']] = \
-    median_imputer.transform(df[['Bldg: Number of HHs', 
-        'PLZ8: Number of Cars']])
-
-    # Bldg: Distance to Point of Sale Category - Impute using mode
-    # obtained from features in general population data
-    df['Bldg: Distance to Point of Sale Category'] = \
-    mode_imputer.transform(df['Bldg: Distance to Point of Sale Category'].\
-        values.reshape(-1, 1))
-
+    # Impute using the median for remaining features
+    cols = ['RR1: Neighborhood Type',
+    'RR1: Purchasing Power (bins)',
+    'HH: Probability of Children in Residence',
+    'Health Type',
+    'RR3: Bins of 1-2 Family Homes',
+    'RR3: Bins of 3-5 Family Homes',
+    'RR3: Bins of 6-10 Family Homes',
+    'RR3: Bins of 10+ Family Homes',
+    'RR3: Bin Counts of Bldgs',
+    'RR1: Movement Patterns',
+    'Generation Movement',
+    'Generation Decade']
+    median_imputer.transform(df[cols])
 
     # -------------------------------------------------------------------
     # Return the cleaned dataframe.
