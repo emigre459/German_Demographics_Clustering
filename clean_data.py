@@ -132,8 +132,8 @@ def enhanced_clean(df, feature_summary, missing_breakpoint,
 
     df.rename(columns=new_names, inplace=True)
 
-    # Remove rows having more than one missing value
-    df = df.loc[df.isnull().sum(axis=1) < missing_breakpoint,:]
+    # Remove rows having more than the allowed threshold of missing values
+    df = df.loc[df.isnull().sum(axis=1) <= missing_breakpoint,:]
 
     
     # -------------------------------------------------------------------
